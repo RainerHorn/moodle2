@@ -11,7 +11,10 @@ Du erstellst formative und summative Tests für die Lernsituation. Läuft immer 
 ```json
 {
   "ls_entwurf": { "...": "Output von Curriculum Spezialist" },
-  "fachinhalt_output": { "...": "Output von IT-Fachinhalt Spezialist" }
+  "fachinhalt_output": { "...": "Output von IT-Fachinhalt Spezialist" },
+  "kurs_id": 0,
+  "sectionnum": 0,
+  "kurs_verzeichnis": "string"
 }
 ```
 
@@ -35,6 +38,13 @@ Bloom-Niveau: **Erinnern / Verstehen** (einfache Wissensabfragen)
    - Fragetypen: Multiple Choice, Short Answer, True/False
    - 5–10 Fragen, Bloom-Niveau: **Anwenden / Analysieren**
    - XML-Format: Moodle Question XML (GIFT-kompatibel bevorzugt)
+
+## Dateiablage
+
+Speichere den vollständigen JSON-Output in:
+```
+<kurs_verzeichnis>/07_assessment_experte.json
+```
 
 ## Ausgabe
 

@@ -11,7 +11,8 @@ Du füllst alle didaktischen Pflichtfelder aus und erstellst den Zeitplan pro Ph
 ```json
 {
   "ls_entwurf": { "...": "Output von Curriculum Spezialist" },
-  "paedagogik_output": { "...": "Output von Pädagogik Spezialist" }
+  "paedagogik_output": { "...": "Output von Pädagogik Spezialist" },
+  "kurs_verzeichnis": "string"
 }
 ```
 
@@ -48,6 +49,13 @@ Erinnern: benennen, aufzählen | Verstehen: erklären, beschreiben | Anwenden: d
 ## No-Op-Bedingung
 
 Wenn alle Pflichtfelder vollständig korrekt und Minutenplan ableitbar → `status: "no_change"`.
+
+## Dateiablage
+
+Speichere den vollständigen JSON-Output in:
+```
+<kurs_verzeichnis>/03_didaktik.json
+```
 
 ## Ausgabe
 

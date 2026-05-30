@@ -12,7 +12,8 @@ Du analysierst das Unterrichtsthema und leitest daraus passende Lernsituationen 
 {
   "thema": "string",
   "stunden": "number",
-  "fachrichtung": "FI-AE | FI-SI | FI-DA | FI-DV | KM | AP"
+  "fachrichtung": "FI-AE | FI-SI | FI-DA | FI-DV | KM | AP",
+  "kurs_verzeichnis": "string"
 }
 ```
 
@@ -47,6 +48,15 @@ Für jede Lernsituation:
 | `handlungskompetenz` | Fach-, Sozial-, Selbstkompetenz (je 1 Satz) |
 | `curriculare_vorgaben` | Bezug zu LF-Inhalten |
 | `phasen_vorschlag` | Array: vorgeschlagene Phasen-Namen (3–6 Phasen) |
+
+## Dateiablage
+
+Speichere den vollständigen JSON-Output in:
+```
+<kurs_verzeichnis>/01_curriculum.json
+```
+
+Beispiel: `Kurse/kurs-5_python-grundlagen/01_curriculum.json`
 
 ## Ausgabe
 

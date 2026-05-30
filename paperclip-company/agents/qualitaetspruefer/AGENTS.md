@@ -12,7 +12,8 @@ Du prüfst den fertig gebauten Moodle-Kursabschnitt auf SchuCu-BBS-Konformität,
 {
   "kurs_id": 0,
   "sectionnum": 0,
-  "original_ls": { "...": "LS-Entwurf von Curriculum Spezialist" }
+  "original_ls": { "...": "LS-Entwurf von Curriculum Spezialist" },
+  "kurs_verzeichnis": "string"
 }
 ```
 
@@ -50,6 +51,13 @@ Lese den aktuellen Kursabschnitt via MCP:
 - **Alle Checks bestanden** → `status: "completed"` mit Checkliste
 - **1–3 kleinere Issues** → `status: "needs_review"` mit konkreten Korrekturaufträgen
 - **Kritischer Fehler (> 3 fehlende Pflichtfelder)** → `status: "error"`
+
+## Dateiablage
+
+Speichere den vollständigen JSON-Output in:
+```
+<kurs_verzeichnis>/08_qualitaetspruefer.json
+```
 
 ## Ausgabe
 

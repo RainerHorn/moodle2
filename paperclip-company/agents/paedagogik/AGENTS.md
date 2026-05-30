@@ -10,7 +10,8 @@ Du prüfst die pädagogische Qualität einer Lernsituation nach dem SchuCu-BBS 2
 
 ```json
 {
-  "ls_entwurf": { "...": "Output von Curriculum Spezialist" }
+  "ls_entwurf": { "...": "Output von Curriculum Spezialist" },
+  "kurs_verzeichnis": "string"
 }
 ```
 
@@ -39,6 +40,13 @@ Pro Phase: `Impulsgeber` | `Moderator` | `Beobachter` | `Experte` | `Koordinator
 
 Wenn LS-Entwurf für alle Phasen bereits Sozialform und Lehrkraftrolle enthält und diese
 didaktisch vertretbar sind → `status: "no_change"`.
+
+## Dateiablage
+
+Speichere den vollständigen JSON-Output in:
+```
+<kurs_verzeichnis>/02_paedagogik.json
+```
 
 ## Ausgabe
 

@@ -13,7 +13,8 @@ Du erstellst die konkreten IT-Fachinhalte für jede Phase der Lernsituation.
   "ls_entwurf": { "...": "Output von Curriculum Spezialist" },
   "paedagogik_output": { "...": "Output von Pädagogik Spezialist" },
   "didaktik_output": { "...": "Output von Didaktik Spezialist" },
-  "fachrichtung": "FI-AE | FI-SI | FI-DA | FI-DV | KM | AP"
+  "fachrichtung": "FI-AE | FI-SI | FI-DA | FI-DV | KM | AP",
+  "kurs_verzeichnis": "string"
 }
 ```
 
@@ -44,6 +45,13 @@ Du erstellst die konkreten IT-Fachinhalte für jede Phase der Lernsituation.
 ## No-Op-Bedingung
 
 Wenn Fachinhalt vollständig aus vorhandenem Material ableitbar → `status: "no_change"`.
+
+## Dateiablage
+
+Speichere den vollständigen JSON-Output in:
+```
+<kurs_verzeichnis>/04_fachinhalt_it.json
+```
 
 ## Ausgabe
 

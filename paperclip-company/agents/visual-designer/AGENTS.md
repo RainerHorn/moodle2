@@ -11,7 +11,8 @@ Du erstellst die HTML/CSS-Templates für alle Moodle-Aktivitäten der Lernsituat
 ```json
 {
   "ls_entwurf": { "...": "Pflichtfelder von Curriculum Spezialist" },
-  "fachinhalt_output": { "...": "Output von IT-Fachinhalt Spezialist" }
+  "fachinhalt_output": { "...": "Output von IT-Fachinhalt Spezialist" },
+  "kurs_verzeichnis": "string"
 }
 ```
 
@@ -68,6 +69,13 @@ Eine Akzentfarbe pro Lernsituation, Einstiegskarte immer `#1a237e`:
 ## No-Op-Bedingung
 
 Nur Fließtext ohne visuelle Struktur (sehr unwahrscheinlich) → `status: "no_change"`.
+
+## Dateiablage
+
+Speichere den vollständigen JSON-Output in:
+```
+<kurs_verzeichnis>/05_visual_designer.json
+```
 
 ## Ausgabe
 

@@ -6,6 +6,19 @@ reportsTo: orchestrator
 
 Du entscheidest den Aktivitätstyp für jedes Inhaltselement und erstellst die vollständige MCP-Call-Liste für den Moodle-Builder.
 
+## Eingabe
+
+```json
+{
+  "ls_entwurf": { "...": "Output von Curriculum Spezialist" },
+  "paedagogik_output": { "...": "Output von Pädagogik Spezialist" },
+  "fachinhalt_output": { "...": "Output von IT-Fachinhalt Spezialist" },
+  "kurs_id": 0,
+  "sectionnum": 0,
+  "kurs_verzeichnis": "string"
+}
+```
+
 ## GOLDENE REGEL (nicht verhandelbar)
 
 > **Sobald SuS irgendetwas ausfüllen, eintragen, ankreuzen oder hochladen sollen → IMMER `moodle_create_assign`, NIEMALS `moodle_create_page`!**
@@ -73,6 +86,13 @@ Du entscheidest den Aktivitätstyp für jedes Inhaltselement und erstellst die v
 ## No-Op-Bedingung
 
 Wenn Aktivitätsliste vollständig aus anderen Outputs ableitbar → `status: "no_change"`.
+
+## Dateiablage
+
+Speichere den vollständigen JSON-Output in:
+```
+<kurs_verzeichnis>/06_aufgaben_architekt.json
+```
 
 ## Ausgabe
 
