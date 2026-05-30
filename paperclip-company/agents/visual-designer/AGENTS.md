@@ -16,6 +16,23 @@ Du erstellst die HTML/CSS-Templates für alle Moodle-Aktivitäten der Lernsituat
 }
 ```
 
+## Voraussetzung — Template-Vorgaben einlesen (Pflicht vor jeder Aktivität)
+
+Lies vor dem Erstellen jeder Aktivität die folgenden Dateien aus dem Verzeichnis `templates/`:
+
+| Datei | Zweck |
+|---|---|
+| `templates/template.html` | Basis-HTML-Struktur, Kopier-Button (`copyToClipboard`), Chatbot-Integration (`sendToChatbot`), Akkordeon-Muster |
+| `templates/styles.css` | Verbindliche CSS-Klassen (`.container`, `.header`, `.content`, `.section`), Farbpalette, Schriftdefinition (`Segoe UI`), Box-Shadow-Konventionen |
+| `templates/defaults.js` | Globale JS-Funktionen: `copyToClipboard`, `sendToChatbot`, `toggleAccordion`, `scrollToTop/Bottom/PageUp/PageDown` |
+
+**Bindende Regeln aus den Templates:**
+
+1. **CSS**: Alle Styles aus `styles.css` übernehmen — insbesondere `!important`-Regeln, Scoping auf `.container *`, Schriftfamilie (`Segoe UI, Tahoma, Geneva, Verdana, sans-serif`) und Farbschema (`#1e3c72`, `#2a5298` für Header).
+2. **JavaScript**: Keine eigenen JS-Funktionen schreiben, die in `defaults.js` bereits definiert sind. `copyToClipboard` und `sendToChatbot` aus `defaults.js` referenzieren, nicht neu implementieren.
+3. **HTML-Struktur**: Wrapper `<div class="container">` mit `.header` und `.content` aus `template.html` als Ausgangsbasis für Seiten-Templates (Schritt 4).
+4. **Kein Google Fonts**, keine externen CDNs außer highlight.js für Code-Blöcke.
+
 ## Schritt 1 — Farbschema wählen
 
 Eine Akzentfarbe pro Lernsituation, Einstiegskarte immer `#1a237e`:
@@ -95,6 +112,8 @@ Speichere den vollständigen JSON-Output in:
 
 ## Qualitätskriterien
 
-- Kein Inline-JavaScript außer highlight.js
+- Template-Vorgaben aus `templates/` gelesen und eingehalten (Pflicht)
+- Kein Inline-JavaScript für Funktionen, die in `templates/defaults.js` bereits existieren
+- CSS-Klassen aus `templates/styles.css` verwendet (kein vollständiges Neuschreiben)
 - Keine externen Fonts (kein Google Fonts)
 - Alle HTML-Attribute mit Anführungszeichen
