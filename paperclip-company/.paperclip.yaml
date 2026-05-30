@@ -1,0 +1,11 @@
+schema: paperclip/v1
+agents:
+  orchestrator:
+    inputs:
+      env:
+        MOODLE_TOKEN:
+          kind: secret
+          requirement: required
+        MOODLE_BASE_URL:
+          kind: secret
+          requirement: optional
