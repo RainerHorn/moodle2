@@ -89,6 +89,14 @@ $functions = [
         'capabilities'  => 'mod/quiz:manage',
     ],
 
+    'local_aicoursecreator_update_quiz' => [
+        'classname'     => 'local_aicoursecreator\external\update_quiz',
+        'description'   => 'Updates properties of an existing quiz activity (name, intro, timelimit, attempts, grademethod, visible).',
+        'type'          => 'write',
+        'ajax'          => false,
+        'capabilities'  => 'moodle/course:manageactivities',
+    ],
+
     'local_aicoursecreator_upload_assignfile' => [
         'classname'     => 'local_aicoursecreator\external\upload_assignfile',
         'description'   => 'Uploads a file (Base64) as additional attachment to a mod_assign activity.',

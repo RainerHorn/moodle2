@@ -17,8 +17,8 @@ KI-gestützter Moodle-Kursdesigner für Fachinformatiker-Ausbildungen an BBS (Ni
 | Agenten-Skill | `MoodleMcp/SKILL.md` | ✅ vorhanden |
 | Pädagogische Basis | `references/schucu2024.md` | ✅ vorhanden |
 | Rahmenlehrplan | `references/Rahmenlehrplan_Fachinformatiker_2019_Zusammenfassung.md` | ✅ vorhanden |
-| Quiz-Backend | `local_aicoursecreator` Plugin-Erweiterung (3 neue Funktionen) | ❌ fehlt |
-| Quiz-MCP-Tools | `moodle-mcp.js` (3 neue Tools) | ❌ fehlt |
+| Quiz-Backend | `local_aicoursecreator` Plugin-Erweiterung (6 neue Funktionen) | ✅ erledigt |
+| Quiz-MCP-Tools | `moodle-mcp.js` (6 neue Tools) | ✅ erledigt |
 | Fragen-Generator | `MoodleQuestionGenerator` Submodul (XML-Export + HTML-Vorschau) | ✅ vorhanden |
 | Agenten-Definitionen | `MoodleMcp/agents/*.agent.md` (9 Dateien) | ❌ fehlt |
 
@@ -100,34 +100,20 @@ zu tun hatte:
 
 ## Detaillierte To-Do-Liste
 
-### Phase A — Plugin-Erweiterung (Quiz-Unterstützung) ⚡ Kritischer Pfad
+### Phase A — Plugin-Erweiterung (Quiz-Unterstützung) ✅ Abgeschlossen
 
-> Muss vor allen Agenten-Definitionen fertig sein. Unabhängig von Phase B parallel möglich.
+> Implementiert als vollständiger XML-Import-Workflow (besser als ursprünglich geplant).
 
-- [ ] **A1** — `local_aicoursecreator/classes/external/create_quiz.php` anlegen
-  - Parameter: `courseid`, `sectionnum`, `name`, `intro`, `timelimit`, `attempts`, `grademethod`
-  - Gibt `quizid` + `cmid` zurück
-  - Muster: analog zu `create_assign.php`
-
-- [ ] **A2** — `local_aicoursecreator/classes/external/add_question.php` anlegen
-  - Parameter: `quizid`, `qtype` (`multichoice` / `shortanswer` / `match` / `essay`), `questiontext`, `answers[]`, `correctanswer`, `feedback`
-  - Gibt `questionid` zurück
-
-- [ ] **A3** — `local_aicoursecreator/classes/external/update_quiz.php` anlegen
-  - Parameter: `cmid`, `name?`, `timelimit?`, `attempts?`, `grademethod?`
-
-- [ ] **A4** — `local_aicoursecreator/db/services.php` — 3 neue Funktionen in `AI Course Creator Service` eintragen
-  - `local_aicoursecreator_create_quiz` (write, `manageactivities`)
-  - `local_aicoursecreator_add_question` (write, `manageactivities`)
-  - `local_aicoursecreator_update_quiz` (write, `manageactivities`)
-
-- [ ] **A5** — `MoodleMcp/moodle-mcp.js` — 3 neue Tool-Definitionen ergänzen
-  - `moodle_create_quiz`, `moodle_add_question`, `moodle_update_quiz`
-  - Schema analog zu bestehenden Tools; Tool-Tabelle in `README.md` aktualisieren
-
-- [ ] **A6** — Plugin in Moodle-Testinstanz neu installieren + Token-Dienst aktualisieren
-
-- [ ] **A7** — Smoke-Test: Quiz per MCP-Tool anlegen, Frage hinzufügen, im Browser prüfen
+- [x] **A1** — `create_quiz.php` ✅
+- [x] **A2** — `add_quiz_questions.php` ✅ (aus Fragenbank, nicht inline → sauberer Workflow)
+- [x] **A3** — `update_quiz.php` ✅
+- [x] **A4** — `create_question_category.php` ✅ (Bonus)
+- [x] **A5** — `get_question_types.php` ✅ (Bonus)
+- [x] **A6** — `import_questions_xml.php` ✅ (Bonus — vollständiger MoodleQuestionGenerator-Workflow)
+- [x] **A7** — `services.php` — 6 Funktionen eingetragen ✅
+- [x] **A8** — `moodle-mcp.js` — 6 Tools ergänzt (`moodle_create_quiz`, `moodle_add_quiz_questions`, `moodle_update_quiz`, `moodle_create_question_category`, `moodle_get_question_types`, `moodle_import_questions_xml`) ✅
+- [ ] **A9** — Plugin in Moodle-Testinstanz neu installieren + Token-Dienst aktualisieren
+- [ ] **A10** — Smoke-Test: Quiz per MCP-Tool anlegen, Fragen importieren, im Browser prüfen
 
 ---
 
