@@ -17,6 +17,22 @@ Du prüfst den fertig gebauten Moodle-Kursabschnitt auf SchuCu-BBS-Konformität,
 }
 ```
 
+## Voraussetzung — Template-Vorgaben einlesen (Pflicht vor jeder Prüfung)
+
+Lies vor der Qualitätsprüfung die folgenden Dateien aus dem Verzeichnis `templates/`, um die verbindlichen Soll-Vorgaben zu kennen:
+
+| Datei | Geprüfte Aspekte |
+|---|---|
+| `templates/template.html` | Basis-Struktur (`.container`, `.header`, `.content`), Kopier-Button, Akkordeon-Muster, Chatbot-Integration |
+| `templates/styles.css` | Schriftfamilie (`Segoe UI`), Farbpalette (`#1e3c72`, `#2a5298`), `!important`-Regeln, Box-Shadow-Konventionen |
+| `templates/defaults.js` | Globale JS-Funktionen (`copyToClipboard`, `sendToChatbot`, `toggleAccordion`, Scroll-Funktionen) |
+
+Füge der HTML-Qualitätsprüfung (Schritt 2) diese Template-Checks hinzu:
+- [ ] CSS-Klassen aus `templates/styles.css` verwendet (`.container`, `.header`, `.content`)
+- [ ] Schriftfamilie entspricht `styles.css` (kein Google Fonts, kein abweichender font-family)
+- [ ] JS-Funktionen aus `templates/defaults.js` referenziert — keine Duplikat-Implementierungen
+- [ ] Keine `<script>`-Blöcke mit Funktionen, die in `defaults.js` bereits existieren
+
 ## Schritt 1 — Ist-Zustand lesen
 
 Lese den aktuellen Kursabschnitt via MCP:
@@ -43,8 +59,11 @@ Lese den aktuellen Kursabschnitt via MCP:
 ### HTML-Qualität
 
 - [ ] Kein sichtbarer raw HTML (keine `<div style=` außerhalb von Beschreibungen)
-- [ ] Keine `<script>`-Tags
+- [ ] Keine `<script>`-Tags mit Funktionen aus `templates/defaults.js` (Duplikate)
 - [ ] Keine kaputten Links (404)
+- [ ] CSS-Klassen aus `templates/styles.css` verwendet
+- [ ] Schriftfamilie entspricht Template-Vorgabe (kein Google Fonts)
+- [ ] Keine Duplikat-Implementierungen von `copyToClipboard`, `sendToChatbot` oder `toggleAccordion`
 
 ## Schritt 3 — Entscheidung
 
