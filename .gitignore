@@ -1,0 +1,35 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+package-lock.json
+
+# Moodle Plugin – ZIP-Deployment-Artefakt (wird per Script erzeugt)
+MoodleMcp/Plugin/*.zip
+
+# Testergebnisse (generierte Ausgaben)
+tests/smoke_result.txt
+
+# Umgebungsvariablen / Secrets
+.env
+.env.local
+.env.*.local
+
+# Editoren
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Betriebssystem
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporäre Dateien
+*.tmp
+*.bak
+*.log
