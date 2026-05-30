@@ -103,10 +103,10 @@ zu tun hatte:
 > **Wichtig:** Dateien werden **nicht** per `docker cp` direkt in den Container geschrieben.
 > Stattdessen gilt dieser Prozess:
 
-1. **Lokale Dateien bearbeiten** — alle Änderungen am Plugin erfolgen in `local_aicoursecreator/local_aicoursecreator/`
+1. **Lokale Dateien bearbeiten** — alle Änderungen am Plugin erfolgen in `MoodleMcp/Plugin/local_aicoursecreator/local_aicoursecreator/`
 2. **ZIP erstellen** — das Plugin wird als ZIP gepackt:
    ```powershell
-   Compress-Archive -Path "local_aicoursecreator\local_aicoursecreator\*" -DestinationPath "local_aicoursecreator.zip" -Force
+   Compress-Archive -Path "MoodleMcp\Plugin\local_aicoursecreator\local_aicoursecreator\*" -DestinationPath "MoodleMcp\Plugin\local_aicoursecreator.zip" -Force
    ```
 3. **Nutzer installiert** — das ZIP über Moodle-Admin → *Site Administration → Plugins → Install plugins* hochladen
 4. **Upgrade-Seite bestätigen** — Moodle führt dann `upgrade.php` automatisch aus
@@ -223,14 +223,26 @@ inkonsistente DB-Zustände) und führen zu schwer reproduzierbaren Fehlern.
 ## Dateistruktur (Zielzustand)
 
 ```
-local_aicoursecreator/
-  classes/external/
-    create_quiz.php              ← NEU (A1)
-    add_question.php             ← NEU (A2)
-    update_quiz.php              ← NEU (A3)
-    ... (18 bestehende)
-  db/
-    services.php                 ← erweitert (A4)
+MoodleMcp/
+  Plugin/
+    local_aicoursecreator/
+      local_aicoursecreator/
+        classes/external/
+          create_quiz.php              ← NEU (A1)
+          add_quiz_questions.php       ← NEU (A2)
+          update_quiz.php              ← NEU (A3)
+          create_question_category.php ← NEU (A4)
+          get_question_types.php       ← NEU (A5)
+          import_questions_xml.php     ← NEU (A6)
+          ... (18 weitere bestehende)
+        db/
+          services.php                 ← erweitert (A7)
+        lib.php
+        version.php
+    local_aicoursecreator.zip          ← für Moodle-Installation
+  moodle-mcp.js                        ← 6 neue Tools ergänzt (A8)
+  SKILL.md                             ← unverändert
+  README.md                            ← Tool-Tabelle aktualisiert
 
 agents/                                  ← im Hauptrepo (nicht im Submodul)
   00_orchestrator.agent.md     (B9)
