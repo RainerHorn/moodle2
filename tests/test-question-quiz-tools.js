@@ -9,7 +9,7 @@ function call(name, args) {
     method: 'tools/call',
     params: { name, arguments: args },
   };
-  const p = spawnSync('node', ['MoodleMcp/moodle-mcp.js'], {
+  const p = spawnSync('node', ['../MoodleMcp/moodle-mcp.js'], {
     input: JSON.stringify(req) + '\n',
     encoding: 'utf8',
     env: process.env,
