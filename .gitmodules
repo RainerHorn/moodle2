@@ -1,6 +1,6 @@
 [submodule "MoodleMcp"]
 	path = MoodleMcp
-	url = https://github.com/jtuttas/MoodleMcp
+	url = https://github.com/RainerHorn/MoodleMcp.git
 [submodule "MoodleQuestionGenerator"]
 	path = MoodleQuestionGenerator
-	url = https://github.com/jtuttas/MoodleQuestionGenerator.git
+	url = https://github.com/RainerHorn/MoodleQuestionGenerator.git
