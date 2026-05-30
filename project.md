@@ -20,7 +20,7 @@ KI-gestützter Moodle-Kursdesigner für Fachinformatiker-Ausbildungen an BBS (Ni
 | Quiz-Backend | `local_aicoursecreator` Plugin-Erweiterung (6 neue Funktionen) | ✅ erledigt |
 | Quiz-MCP-Tools | `moodle-mcp.js` (6 neue Tools) | ✅ erledigt |
 | Fragen-Generator | `MoodleQuestionGenerator` Submodul (XML-Export + HTML-Vorschau) | ✅ vorhanden |
-| Agenten-Definitionen | `MoodleMcp/agents/*.agent.md` (9 Dateien) | ❌ fehlt |
+| Agenten-Definitionen | `agents/*.agent.md` (9 Dateien) | ✅ erledigt |
 
 ---
 
@@ -131,8 +131,8 @@ inkonsistente DB-Zustände) und führen zu schwer reproduzierbaren Fehlern.
 - [x] **A6** — `import_questions_xml.php` ✅ (Bonus — vollständiger MoodleQuestionGenerator-Workflow)
 - [x] **A7** — `services.php` — 6 Funktionen eingetragen ✅
 - [x] **A8** — `moodle-mcp.js` — 6 Tools ergänzt (`moodle_create_quiz`, `moodle_add_quiz_questions`, `moodle_update_quiz`, `moodle_create_question_category`, `moodle_get_question_types`, `moodle_import_questions_xml`) ✅
-- [ ] **A9** — Plugin in Moodle-Testinstanz neu installieren + Token-Dienst aktualisieren
-- [ ] **A10** — Smoke-Test: Quiz per MCP-Tool anlegen, Fragen importieren, im Browser prüfen
+- [x] **A9** — Plugin in Moodle-Testinstanz neu installieren + Token-Dienst aktualisieren
+- [x] **A10** — Smoke-Test: Quiz per MCP-Tool anlegen, Fragen importieren, im Browser prüfen
 
 ---
 
@@ -141,44 +141,44 @@ inkonsistente DB-Zustände) und führen zu schwer reproduzierbaren Fehlern.
 > Jede `.agent.md` Datei enthält: `name`, `description`, `applyTo`, System-Prompt,
 > No-Op-Protokoll (s.o.), Output-Schema.
 
-- [x] **B1** — `MoodleMcp/agents/01_curriculum.agent.md`
+- [x] **B1** — `agents/01_curriculum.agent.md`
   - Liest `references/Rahmenlehrplan_Fachinformatiker_2019_Zusammenfassung.md`
   - Lernfeld-Matching per Keyword-Analyse (Thema → LF)
   - LS-Aufteilung: `ceil(stunden / 20)` als Faustregel, min. 1, max. 4
   - Output: Array von LS-Entwürfen mit allen SchuCu-Pflichtfeldern
   - **No-Op:** nicht möglich — dieser Agent läuft immer als erstes
 
-- [x] **B2** — `MoodleMcp/agents/02_paedagogik.agent.md`
+- [x] **B2** — `agents/02_paedagogik.agent.md`
   - Liest `references/schucu2024.md`
   - Prüft: Handlungssituation vollständig? 6 Phasen ableitbar? Sozialformen sinnvoll?
   - Output: Phasenliste mit Sozialform + Lehrkraftrolle + Zeitanteil
   - **No-Op:** wenn Curriculum-Output bereits vollständige Phasenstruktur liefert
 
-- [x] **B3** — `MoodleMcp/agents/03_didaktik.agent.md`
+- [x] **B3** — `agents/03_didaktik.agent.md`
   - Füllt alle SchuCu-Pflichtfelder: Titel, Zeitrichtwert, Handlungsergebnis,
     Handlungskompetenz (Fach/Sozial/Selbst), curriculare Vorgaben
   - Verteilt Gesamtzeit auf Phasen (Minutenplan)
   - **No-Op:** wenn alle Pflichtfelder bereits vollständig
 
-- [x] **B4** — `MoodleMcp/agents/04_fachinhalt_it.agent.md`
+- [x] **B4** — `agents/04_fachinhalt_it.agent.md`
   - Fachrichtungsparameter beachten (FI-AE / FI-SI / FI-DA / FI-DV)
   - Pro Phase: Erklärungstext, Code-Beispiele (Python/Java/Bash/SQL), externe Links
   - Syntax-Highlighting-Sprache als Metadaten mitgeben
   - **No-Op:** wenn keine neuen Fachinhalte gegenüber vorhandenen Materialien benötigt
 
-- [x] **B5** — `MoodleMcp/agents/05_visual_designer.agent.md`
+- [x] **B5** — `agents/05_visual_designer.agent.md`
   - Basiert auf HTML-Vorlagen aus `MoodleMcp/SKILL.md`
   - Wählt Farbschema (1 Farbe pro LS, konsequent durch alle Phasen)
   - Erzeugt: Einstiegskarte-HTML, Phasen-Header-HTML, Canvas-Block (falls Diagramm nötig)
   - **No-Op:** wenn Inhalte keine visuellen Elemente außer Text enthalten
 
-- [x] **B6** — `MoodleMcp/agents/06_aufgaben_architekt.agent.md`
+- [x] **B6** — `agents/06_aufgaben_architekt.agent.md`
   - Goldene Regel aus SKILL.md strikt anwenden: Abgabe → immer `assign`, nie `page`
   - Pro Inhaltselement: Typ + `name` + Completion-Einstellung + ggf. Restriction
   - Output: geordnete Aktivitätsliste als JSON (Basis für Moodle-Builder-Calls)
   - **No-Op:** wenn Aktivitätsliste aus Pädagogik/Didaktik-Output vollständig ableitbar
 
-- [x] **B7** — `MoodleMcp/agents/07_assessment_experte.agent.md`
+- [x] **B7** — `agents/07_assessment_experte.agent.md`
   - **Aktivierend:** 3–5 Fragen als HTML-Seite (`create_page`), JS-Reveal-Button
   - **Formativ:** 1 Selbstcheck-Seite pro Phase (Radio/Checkbox/Input + Lösungsbutton)
   - **Summativ:** Fragen per `MoodleQuestionGenerator` als Moodle-XML erzeugen (Vorlagen aus `templates/`),
@@ -189,14 +189,14 @@ inkonsistente DB-Zustände) und führen zu schwer reproduzierbaren Fehlern.
   - SVG-Diagramme in Fragen möglich (Netzwerktopologien via `symbols/cisco/`)
   - **No-Op:** nicht möglich — Tests werden immer generiert
 
-- [x] **B8** — `MoodleMcp/agents/08_qualitaetspruefer.agent.md`
+- [x] **B8** — `agents/08_qualitaetspruefer.agent.md`
   - Liest `moodle_get_sections` + `moodle_get_modules` nach dem Build
   - Prüft: alle SchuCu-Pflichtfelder vorhanden? Aktivitätstypen korrekt?
     Kein Emoji in Namen? Sectionnum korrekt?
   - Output: `completed` mit Checkliste oder `needs_review` mit konkreten Korrekturaufträgen
   - **No-Op:** nicht möglich — läuft immer nach dem Build
 
-- [x] **B9** — `MoodleMcp/agents/00_orchestrator.agent.md`
+- [x] **B9** — `agents/00_orchestrator.agent.md`
   - Nimmt Eingabe entgegen, ruft Agenten in definierter Reihenfolge auf
   - **Approval-Gate:** nach B1 pausieren, LS-Auswahl abwarten, dann fortfahren
   - `no_change` → Fortschritt, nächste Phase starten
@@ -232,20 +232,21 @@ local_aicoursecreator/
   db/
     services.php                 ← erweitert (A4)
 
+agents/                                  ← im Hauptrepo (nicht im Submodul)
+  00_orchestrator.agent.md     (B9)
+  01_curriculum.agent.md       (B1)
+  02_paedagogik.agent.md       (B2)
+  03_didaktik.agent.md         (B3)
+  04_fachinhalt_it.agent.md    (B4)
+  05_visual_designer.agent.md  (B5)
+  06_aufgaben_architekt.agent.md  (B6)
+  07_assessment_experte.agent.md  (B7)
+  08_qualitaetspruefer.agent.md   (B8)
+
 MoodleMcp/
-  moodle-mcp.js                  ← 3 neue Tools ergänzt (A5)
+  moodle-mcp.js                  ← 6 neue Tools ergänzt (A5/A8)
   SKILL.md                       ← unverändert
   README.md                      ← Tool-Tabelle aktualisiert (A5)
-  agents/
-    00_orchestrator.agent.md     (B9)
-    01_curriculum.agent.md       (B1)
-    02_paedagogik.agent.md       (B2)
-    03_didaktik.agent.md         (B3)
-    04_fachinhalt_it.agent.md    (B4)
-    05_visual_designer.agent.md  (B5)
-    06_aufgaben_architekt.agent.md  (B6)
-    07_assessment_experte.agent.md  (B7)
-    08_qualitaetspruefer.agent.md   (B8)
 
 MoodleQuestionGenerator/                 ← Submodul (git@8724fb8e)
   SKILL.md                               ← Fragen-Generator-Skill
