@@ -12,8 +12,8 @@ KI-gestützter Moodle-Kursdesigner für Fachinformatiker-Ausbildungen an BBS (Ni
 
 | Schicht | Komponente | Status |
 |---------|-----------|--------|
-| Moodle-Backend | `local_aicoursecreator` Plugin (18 REST-Funktionen) | ✅ vorhanden |
-| MCP-Server | `MoodleMcp/moodle-mcp.js` (18 Tools) | ✅ vorhanden |
+| Moodle-Backend | `local_aicoursecreator` Plugin (24 REST-Funktionen) | ✅ vorhanden |
+| MCP-Server | `MoodleMcp/moodle-mcp.js` (24 Tools) | ✅ vorhanden |
 | Agenten-Skill | `MoodleMcp/SKILL.md` | ✅ vorhanden |
 | Pädagogische Basis | `references/schucu2024.md` | ✅ vorhanden |
 | Rahmenlehrplan | `references/Rahmenlehrplan_Fachinformatiker_2019_Zusammenfassung.md` | ✅ vorhanden |
@@ -255,11 +255,6 @@ agents/                                  ← im Hauptrepo (nicht im Submodul)
   07_assessment_experte.agent.md  (B7)
   08_qualitaetspruefer.agent.md   (B8)
 
-MoodleMcp/
-  moodle-mcp.js                  ← 6 neue Tools ergänzt (A5/A8)
-  SKILL.md                       ← unverändert
-  README.md                      ← Tool-Tabelle aktualisiert (A5)
-
 MoodleQuestionGenerator/                 ← Submodul (git@8724fb8e)
   SKILL.md                               ← Fragen-Generator-Skill
   moodle-xml-struktur-referenz.md        ← XML-Schnelllookup
@@ -270,5 +265,13 @@ MoodleQuestionGenerator/                 ← Submodul (git@8724fb8e)
 references/
   Rahmenlehrplan_Fachinformatiker_2019_Zusammenfassung.md  ✅
   schucu2024.md                                            ✅
-  project.md                                               ← dieses Dokument
+
+tests/
+  smoke_test.ps1                 ← Smoke-Tests T1–T6 (PowerShell)
+  test-question-quiz-tools.js    ← MCP-Quiz-Tool-Tests (Node.js)
+  smoke_result.txt               ← letztes Testergebnis
+  check_functions.php            ← CLI: eingetragene Moodle-Funktionen prüfen
+
+.gitignore                               ← node_modules, *.zip, .env, OS-Artefakte
+project.md                               ← dieses Dokument
 ```
