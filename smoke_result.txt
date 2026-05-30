@@ -1,0 +1,8 @@
+--- Smoke Test Suite ---
+[PASS] T1 get_courses (id=2)
+[PASS] T2 get_sections (sections=6)
+[PASS] T3 get_question_types (types=18)
+[PASS] T4 create_question_category (categoryid=6)
+[FAIL] T5 create_quiz => errorcode=dmlwriteexception: Error writing to database
+
+=== Ergebnis: 4 PASS / 1 FAIL ===

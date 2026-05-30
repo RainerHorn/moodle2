@@ -94,7 +94,7 @@ $functions = [
         'description'   => 'Updates properties of an existing quiz activity (name, intro, timelimit, attempts, grademethod, visible).',
         'type'          => 'write',
         'ajax'          => false,
-        'capabilities'  => 'moodle/course:manageactivities',
+        'capabilities'  => 'mod/quiz:manage',
     ],
 
     'local_aicoursecreator_upload_assignfile' => [
@@ -235,6 +235,7 @@ $services = [
             'local_aicoursecreator_import_questions_xml',
             'local_aicoursecreator_create_quiz',
             'local_aicoursecreator_add_quiz_questions',
+            'local_aicoursecreator_update_quiz',
             'local_aicoursecreator_upload_assignfile',
             'local_aicoursecreator_set_completion',
             'local_aicoursecreator_set_restriction',

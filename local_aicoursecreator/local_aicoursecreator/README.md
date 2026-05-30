@@ -20,6 +20,7 @@ Moodle 4.x Plugin – ermöglicht KI-gestützten Kursaufbau via Webservice / MCP
 | `local_aicoursecreator_import_questions_xml` | Importiert Moodle-XML-Fragen in eine Kategorie |
 | `local_aicoursecreator_create_quiz` | Erstellt eine Quiz-Aktivität |
 | `local_aicoursecreator_add_quiz_questions` | Fügt vorhandene Fragen einem Quiz hinzu |
+| `local_aicoursecreator_update_quiz` | Bearbeitet Eigenschaften einer Quiz-Aktivität |
 
 ---
 
@@ -200,6 +201,7 @@ maxmark=1
 | import_questions_xml | courseid, categoryid, xml, filename | Vollständiges Moodle-XML in eine Kategorie importieren |
 | create_quiz | courseid, sectionnum, name, intro, grade | Quiz-Aktivität anlegen |
 | add_quiz_questions | cmid, questionids[], maxmark | Vorhandene Fragen einem Quiz hinzufügen |
+| update_quiz | cmid, name, intro, timelimit, attempts, grademethod, visible | Bestehendes Quiz bearbeiten |
 
 Der XML-Import folgt dem MoodleQuestionGenerator-Workflow: Das Tool erwartet
 valides Moodle-XML mit `<quiz>` als Root-Element. Jede Frage muss

@@ -7,6 +7,7 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/externallib.php');
 require_once($CFG->dirroot . '/mod/quiz/lib.php');
+require_once($CFG->dirroot . '/mod/quiz/locallib.php');
 
 use external_api;
 use external_function_parameters;
@@ -44,12 +45,12 @@ class add_quiz_questions extends external_api {
 
         foreach ($params['questionids'] as $questionid) {
             $DB->get_record('question', ['id' => $questionid], 'id', MUST_EXIST);
-            quiz_add_quiz_question((int) $questionid, $quiz, 0, $params['maxmark']);
+            \quiz_add_quiz_question((int) $questionid, $quiz, 0, $params['maxmark']);
             $added[] = (int) $questionid;
         }
 
-        quiz_update_sumgrades($quiz);
-        quiz_update_all_final_grades($quiz);
+        \quiz_update_sumgrades($quiz);
+        \quiz_update_all_final_grades($quiz);
 
         return [
             'cmid'        => (int) $params['cmid'],

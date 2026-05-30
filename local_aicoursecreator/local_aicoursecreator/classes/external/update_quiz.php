@@ -5,11 +5,13 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/externallib.php');
 require_once($CFG->dirroot . '/course/lib.php');
+require_once($CFG->dirroot . '/mod/quiz/lib.php');
 
 use external_api;
 use external_function_parameters;
 use external_value;
 use external_single_structure;
+use context_course;
 use context_module;
 
 class update_quiz extends external_api {
@@ -54,9 +56,13 @@ class update_quiz extends external_api {
         ]);
 
         $cm = get_coursemodule_from_id('quiz', $params['cmid'], 0, false, MUST_EXIST);
-        $context = context_module::instance($cm->id);
-        self::validate_context($context);
-        require_capability('moodle/course:manageactivities', $context);
+        $coursecontext = context_course::instance($cm->course);
+        $modulecontext = context_module::instance($cm->id);
+        self::validate_context($modulecontext);
+        if (!has_capability('mod/quiz:manage', $modulecontext)
+                && !has_capability('moodle/course:manageactivities', $coursecontext)) {
+            throw new \required_capability_exception($modulecontext, 'mod/quiz:manage', 'nopermissions', '');
+        }
 
         $quiz = $DB->get_record('quiz', ['id' => $cm->instance], '*', MUST_EXIST);
 
@@ -71,7 +77,7 @@ class update_quiz extends external_api {
         $DB->update_record('quiz', $quiz);
 
         if ($params['visible'] >= 0) {
-            $DB->set_field('course_modules', 'visible', $params['visible'], ['id' => $cm->id]);
+            set_coursemodule_visible($cm->id, $params['visible'] ? 1 : 0);
         }
 
         rebuild_course_cache($cm->course, true);

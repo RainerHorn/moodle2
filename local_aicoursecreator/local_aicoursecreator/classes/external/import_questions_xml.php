@@ -15,6 +15,7 @@ use external_value;
 use external_single_structure;
 use external_multiple_structure;
 use context_course;
+use core_question\local\bank\question_edit_contexts;
 
 class import_questions_xml extends external_api {
 
@@ -54,7 +55,7 @@ class import_questions_xml extends external_api {
         $tmpfile = $tmpdir . '/questions.xml';
         file_put_contents($tmpfile, $params['xml']);
 
-        $contexts = new \question_edit_contexts($context);
+        $contexts = new question_edit_contexts($context);
         $qformat = new \qformat_xml();
         $qformat->setContexts($contexts->having_one_edit_tab_cap('import'));
         $qformat->setCourse($DB->get_record('course', ['id' => $params['courseid']], '*', MUST_EXIST));
@@ -66,7 +67,14 @@ class import_questions_xml extends external_api {
         $qformat->setContextfromfile(false);
         $qformat->setStoponerror(true);
 
-        if (!$qformat->importprocess()) {
+        ob_start();
+        try {
+            $imported = $qformat->importprocess();
+        } finally {
+            ob_end_clean();
+        }
+
+        if (!$imported) {
             throw new \moodle_exception('questionimportfailed', 'question');
         }
 

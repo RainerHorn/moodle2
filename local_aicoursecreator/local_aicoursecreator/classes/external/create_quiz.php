@@ -7,8 +7,6 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/externallib.php');
 require_once($CFG->dirroot . '/course/lib.php');
-require_once($CFG->dirroot . '/course/modlib.php');
-require_once($CFG->dirroot . '/mod/quiz/lib.php');
 
 use external_api;
 use external_function_parameters;
@@ -62,55 +60,89 @@ class create_quiz extends external_api {
         require_capability('moodle/course:manageactivities', $context);
 
         $course = $DB->get_record('course', ['id' => $params['courseid']], '*', MUST_EXIST);
+        $now = time();
 
-        $moduleinfo = new \stdClass();
-        $moduleinfo->modulename = 'quiz';
-        $moduleinfo->module = $DB->get_field('modules', 'id', ['name' => 'quiz'], MUST_EXIST);
-        $moduleinfo->course = $params['courseid'];
-        $moduleinfo->section = $params['sectionnum'];
-        $moduleinfo->name = $params['name'];
-        $moduleinfo->visible = $params['visible'];
-        $moduleinfo->intro = $params['intro'];
-        $moduleinfo->introformat = FORMAT_HTML;
-        $moduleinfo->timeopen = 0;
-        $moduleinfo->timeclose = 0;
-        $moduleinfo->timelimit = 0;
-        $moduleinfo->overduehandling = 'autosubmit';
-        $moduleinfo->graceperiod = 0;
-        $moduleinfo->grade = $params['grade'];
-        $moduleinfo->sumgrades = 0;
-        $moduleinfo->gradepass = 0;
-        $moduleinfo->attempts = 0;
-        $moduleinfo->grademethod = QUIZ_GRADEHIGHEST;
-        $moduleinfo->questionsperpage = $params['questionsperpage'];
-        $moduleinfo->navmethod = QUIZ_NAVMETHOD_FREE;
-        $moduleinfo->shuffleanswers = $params['shuffleanswers'] ? 1 : 0;
-        $moduleinfo->preferredbehaviour = $params['preferredbehaviour'];
-        $moduleinfo->canredoquestions = 0;
-        $moduleinfo->attemptonlast = 0;
-        $moduleinfo->decimalpoints = 2;
-        $moduleinfo->questiondecimalpoints = -1;
-        $moduleinfo->reviewattempt = 0x11110;
-        $moduleinfo->reviewcorrectness = 0x10000;
-        $moduleinfo->reviewmarks = 0x11110;
-        $moduleinfo->reviewspecificfeedback = 0x10000;
-        $moduleinfo->reviewgeneralfeedback = 0x10000;
-        $moduleinfo->reviewrightanswer = 0x10000;
-        $moduleinfo->reviewoverallfeedback = 0x10000;
-        $moduleinfo->browsersecurity = '-';
-        $moduleinfo->delay1 = 0;
-        $moduleinfo->delay2 = 0;
-        $moduleinfo->showuserpicture = 0;
-        $moduleinfo->showblocks = 0;
-        $moduleinfo->completionattemptsexhausted = 0;
-        $moduleinfo->completionpass = 0;
-        $moduleinfo->allowofflineattempts = 0;
+        // 1. Insert into mdl_quiz directly (avoids mod_form/add_moduleinfo complexity in Moodle 4.5).
+        $quiz = new \stdClass();
+        $quiz->course              = $params['courseid'];
+        $quiz->name                = $params['name'];
+        $quiz->intro               = $params['intro'];
+        $quiz->introformat         = FORMAT_HTML;
+        $quiz->timeopen            = 0;
+        $quiz->timeclose           = 0;
+        $quiz->timelimit           = 0;
+        $quiz->overduehandling     = 'autosubmit';
+        $quiz->graceperiod         = 0;
+        $quiz->preferredbehaviour  = $params['preferredbehaviour'];
+        $quiz->canredoquestions    = 0;
+        $quiz->attempts            = 0;
+        $quiz->attemptonlast       = 0;
+        $quiz->grademethod         = 1; // QUIZ_GRADEHIGHEST
+        $quiz->decimalpoints       = 2;
+        $quiz->questiondecimalpoints = -1;
+        $quiz->reviewattempt       = 69888;  // show after close
+        $quiz->reviewcorrectness   = 4352;
+        $quiz->reviewmarks         = 69888;
+        $quiz->reviewspecificfeedback = 69888;
+        $quiz->reviewgeneralfeedback  = 69888;
+        $quiz->reviewrightanswer      = 4352;
+        $quiz->reviewoverallfeedback  = 4352;
+        $quiz->questionsperpage    = $params['questionsperpage'];
+        $quiz->navmethod           = 'free';
+        $quiz->shuffleanswers      = $params['shuffleanswers'] ? 1 : 0;
+        $quiz->sumgrades           = 0;
+        $quiz->grade               = $params['grade'];
+        $quiz->timecreated         = $now;
+        $quiz->timemodified        = $now;
+        $quiz->password            = '';
+        $quiz->subnet              = '';
+        $quiz->browsersecurity     = '-';
+        $quiz->delay1              = 0;
+        $quiz->delay2              = 0;
+        $quiz->showuserpicture     = 0;
+        $quiz->showblocks          = 0;
+        $quiz->completionattemptsexhausted = 0;
+        $quiz->allowofflineattempts = 0;
 
-        $moduleinfo = add_moduleinfo($moduleinfo, $course);
+        $quizid = $DB->insert_record('quiz', $quiz);
+
+        // Required: at least one feedback row (grade >= 0, grade <= max).
+        $feedback = new \stdClass();
+        $feedback->quizid          = $quizid;
+        $feedback->feedbacktext    = '';
+        $feedback->feedbacktextformat = FORMAT_HTML;
+        $feedback->mingrade        = 0;
+        $feedback->maxgrade        = 0;
+        $DB->insert_record('quiz_feedback', $feedback);
+
+        // 2. Create course_module entry.
+        $moduleid = $DB->get_field('modules', 'id', ['name' => 'quiz'], MUST_EXIST);
+        $cm = new \stdClass();
+        $cm->course     = $params['courseid'];
+        $cm->module     = $moduleid;
+        $cm->instance   = $quizid;
+        $cm->section    = 0; // will be updated by course_add_cm_to_section
+        $cm->visible    = $params['visible'];
+        $cm->added      = $now;
+        $cm->score      = 0;
+        $cm->indent     = 0;
+        $cm->groupmode  = 0;
+        $cm->groupingid = 0;
+        $cm->completion = 0;
+        $cmid = $DB->insert_record('course_modules', $cm);
+
+        // 3. Add to the correct section.
+        course_add_cm_to_section($params['courseid'], $cmid, $params['sectionnum']);
+
+        // 4. Create module context (required for capability checks on this module).
+        \context_module::instance($cmid);
+
+        // 5. Rebuild course cache.
+        rebuild_course_cache($params['courseid'], true);
 
         return [
-            'cmid'    => (int) $moduleinfo->coursemodule,
-            'quizid'  => (int) $moduleinfo->instance,
+            'cmid'    => (int) $cmid,
+            'quizid'  => (int) $quizid,
             'message' => 'Quiz "' . $params['name'] . '" successfully created.',
         ];
     }

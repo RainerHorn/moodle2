@@ -98,6 +98,25 @@ zu tun hatte:
 
 ---
 
+## Deployment-Workflow (Plugin-Updates)
+
+> **Wichtig:** Dateien werden **nicht** per `docker cp` direkt in den Container geschrieben.
+> Stattdessen gilt dieser Prozess:
+
+1. **Lokale Dateien bearbeiten** — alle Änderungen am Plugin erfolgen in `local_aicoursecreator/local_aicoursecreator/`
+2. **ZIP erstellen** — das Plugin wird als ZIP gepackt:
+   ```powershell
+   Compress-Archive -Path "local_aicoursecreator\local_aicoursecreator\*" -DestinationPath "local_aicoursecreator.zip" -Force
+   ```
+3. **Nutzer installiert** — das ZIP über Moodle-Admin → *Site Administration → Plugins → Install plugins* hochladen
+4. **Upgrade-Seite bestätigen** — Moodle führt dann `upgrade.php` automatisch aus
+
+**Warum kein `docker cp`?**  
+Direkte Container-Kopien umgehen den Moodle-Plugin-Lifecycle (kein `upgrade.php`, kein Cache-Flush,
+inkonsistente DB-Zustände) und führen zu schwer reproduzierbaren Fehlern.
+
+---
+
 ## Detaillierte To-Do-Liste
 
 ### Phase A — Plugin-Erweiterung (Quiz-Unterstützung) ✅ Abgeschlossen
