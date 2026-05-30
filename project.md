@@ -141,44 +141,44 @@ inkonsistente DB-Zustände) und führen zu schwer reproduzierbaren Fehlern.
 > Jede `.agent.md` Datei enthält: `name`, `description`, `applyTo`, System-Prompt,
 > No-Op-Protokoll (s.o.), Output-Schema.
 
-- [ ] **B1** — `MoodleMcp/agents/01_curriculum.agent.md`
+- [x] **B1** — `MoodleMcp/agents/01_curriculum.agent.md`
   - Liest `references/Rahmenlehrplan_Fachinformatiker_2019_Zusammenfassung.md`
   - Lernfeld-Matching per Keyword-Analyse (Thema → LF)
   - LS-Aufteilung: `ceil(stunden / 20)` als Faustregel, min. 1, max. 4
   - Output: Array von LS-Entwürfen mit allen SchuCu-Pflichtfeldern
   - **No-Op:** nicht möglich — dieser Agent läuft immer als erstes
 
-- [ ] **B2** — `MoodleMcp/agents/02_paedagogik.agent.md`
+- [x] **B2** — `MoodleMcp/agents/02_paedagogik.agent.md`
   - Liest `references/schucu2024.md`
   - Prüft: Handlungssituation vollständig? 6 Phasen ableitbar? Sozialformen sinnvoll?
   - Output: Phasenliste mit Sozialform + Lehrkraftrolle + Zeitanteil
   - **No-Op:** wenn Curriculum-Output bereits vollständige Phasenstruktur liefert
 
-- [ ] **B3** — `MoodleMcp/agents/03_didaktik.agent.md`
+- [x] **B3** — `MoodleMcp/agents/03_didaktik.agent.md`
   - Füllt alle SchuCu-Pflichtfelder: Titel, Zeitrichtwert, Handlungsergebnis,
     Handlungskompetenz (Fach/Sozial/Selbst), curriculare Vorgaben
   - Verteilt Gesamtzeit auf Phasen (Minutenplan)
   - **No-Op:** wenn alle Pflichtfelder bereits vollständig
 
-- [ ] **B4** — `MoodleMcp/agents/04_fachinhalt_it.agent.md`
+- [x] **B4** — `MoodleMcp/agents/04_fachinhalt_it.agent.md`
   - Fachrichtungsparameter beachten (FI-AE / FI-SI / FI-DA / FI-DV)
   - Pro Phase: Erklärungstext, Code-Beispiele (Python/Java/Bash/SQL), externe Links
   - Syntax-Highlighting-Sprache als Metadaten mitgeben
   - **No-Op:** wenn keine neuen Fachinhalte gegenüber vorhandenen Materialien benötigt
 
-- [ ] **B5** — `MoodleMcp/agents/05_visual_designer.agent.md`
+- [x] **B5** — `MoodleMcp/agents/05_visual_designer.agent.md`
   - Basiert auf HTML-Vorlagen aus `MoodleMcp/SKILL.md`
   - Wählt Farbschema (1 Farbe pro LS, konsequent durch alle Phasen)
   - Erzeugt: Einstiegskarte-HTML, Phasen-Header-HTML, Canvas-Block (falls Diagramm nötig)
   - **No-Op:** wenn Inhalte keine visuellen Elemente außer Text enthalten
 
-- [ ] **B6** — `MoodleMcp/agents/06_aufgaben_architekt.agent.md`
+- [x] **B6** — `MoodleMcp/agents/06_aufgaben_architekt.agent.md`
   - Goldene Regel aus SKILL.md strikt anwenden: Abgabe → immer `assign`, nie `page`
   - Pro Inhaltselement: Typ + `name` + Completion-Einstellung + ggf. Restriction
   - Output: geordnete Aktivitätsliste als JSON (Basis für Moodle-Builder-Calls)
   - **No-Op:** wenn Aktivitätsliste aus Pädagogik/Didaktik-Output vollständig ableitbar
 
-- [ ] **B7** — `MoodleMcp/agents/07_assessment_experte.agent.md`
+- [x] **B7** — `MoodleMcp/agents/07_assessment_experte.agent.md`
   - **Aktivierend:** 3–5 Fragen als HTML-Seite (`create_page`), JS-Reveal-Button
   - **Formativ:** 1 Selbstcheck-Seite pro Phase (Radio/Checkbox/Input + Lösungsbutton)
   - **Summativ:** Fragen per `MoodleQuestionGenerator` als Moodle-XML erzeugen (Vorlagen aus `templates/`),
@@ -189,14 +189,14 @@ inkonsistente DB-Zustände) und führen zu schwer reproduzierbaren Fehlern.
   - SVG-Diagramme in Fragen möglich (Netzwerktopologien via `symbols/cisco/`)
   - **No-Op:** nicht möglich — Tests werden immer generiert
 
-- [ ] **B8** — `MoodleMcp/agents/08_qualitaetspruefer.agent.md`
+- [x] **B8** — `MoodleMcp/agents/08_qualitaetspruefer.agent.md`
   - Liest `moodle_get_sections` + `moodle_get_modules` nach dem Build
   - Prüft: alle SchuCu-Pflichtfelder vorhanden? Aktivitätstypen korrekt?
     Kein Emoji in Namen? Sectionnum korrekt?
   - Output: `completed` mit Checkliste oder `needs_review` mit konkreten Korrekturaufträgen
   - **No-Op:** nicht möglich — läuft immer nach dem Build
 
-- [ ] **B9** — `MoodleMcp/agents/00_orchestrator.agent.md`
+- [x] **B9** — `MoodleMcp/agents/00_orchestrator.agent.md`
   - Nimmt Eingabe entgegen, ruft Agenten in definierter Reihenfolge auf
   - **Approval-Gate:** nach B1 pausieren, LS-Auswahl abwarten, dann fortfahren
   - `no_change` → Fortschritt, nächste Phase starten
