@@ -9,12 +9,13 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_aicoursecreator';
-$plugin->version   = 2025041911;  // Format: YYYYMMDDNN – NN bei mehreren Releases pro Tag hochzählen
+$plugin->version   = 2025041912;  // Format: YYYYMMDDNN – NN bei mehreren Releases pro Tag hochzählen
 $plugin->requires  = 2022041900;  // Moodle 4.0+
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = '1.0.11';
+$plugin->release   = '1.0.12';
 
 // Changelog:
+// 1.0.12 (2025041912) – Neues Tool: get_question_types
 // 1.0.11 (2025041911) – Neue Tools: question categories, Moodle-XML question import, quiz creation, add quiz questions
 // 1.0.10 (2025041910) – Neue Tools: get_courses, create_section, set_module_visibility, delete_module
 // 1.0.2 (2025041902) – Bugfix: course_modules hat kein timemodified-Feld

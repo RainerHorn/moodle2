@@ -15,6 +15,7 @@ Moodle 4.x Plugin – ermöglicht KI-gestützten Kursaufbau via Webservice / MCP
 | `local_aicoursecreator_set_module_visibility` | Blendet eine Aktivität per cmid ein oder aus |
 | `local_aicoursecreator_delete_module` | Löscht eine Aktivität per cmid |
 | `local_aicoursecreator_get_question_categories` | Listet Fragenkategorien eines Kurses |
+| `local_aicoursecreator_get_question_types` | Listet installierte/verfügbare Fragetypen |
 | `local_aicoursecreator_create_question_category` | Erstellt eine Fragenkategorie |
 | `local_aicoursecreator_import_questions_xml` | Importiert Moodle-XML-Fragen in eine Kategorie |
 | `local_aicoursecreator_create_quiz` | Erstellt eine Quiz-Aktivität |
@@ -194,6 +195,7 @@ maxmark=1
 | Funktion | Wichtige Parameter | Beschreibung |
 |---|---|---|
 | get_question_categories | courseid | Kategorien der Kurs-Fragensammlung lesen |
+| get_question_types | courseid | Verfügbare Fragetypen für Moodle-XML prüfen |
 | create_question_category | courseid, name, info, parentid | Kategorie unter der Kurs-Top-Kategorie oder einer Parent-Kategorie anlegen |
 | import_questions_xml | courseid, categoryid, xml, filename | Vollständiges Moodle-XML in eine Kategorie importieren |
 | create_quiz | courseid, sectionnum, name, intro, grade | Quiz-Aktivität anlegen |

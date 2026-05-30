@@ -49,6 +49,14 @@ $functions = [
         'capabilities'  => 'moodle/question:viewall',
     ],
 
+    'local_aicoursecreator_get_question_types' => [
+        'classname'     => 'local_aicoursecreator\external\get_question_types',
+        'description'   => 'Returns installed Moodle question types available for Moodle XML import.',
+        'type'          => 'read',
+        'ajax'          => false,
+        'capabilities'  => 'moodle/question:viewall',
+    ],
+
     'local_aicoursecreator_create_question_category' => [
         'classname'     => 'local_aicoursecreator\external\create_question_category',
         'description'   => 'Creates a question category in the course question bank.',
@@ -214,6 +222,7 @@ $services = [
             'local_aicoursecreator_set_module_visibility',
             'local_aicoursecreator_delete_module',
             'local_aicoursecreator_get_question_categories',
+            'local_aicoursecreator_get_question_types',
             'local_aicoursecreator_create_question_category',
             'local_aicoursecreator_import_questions_xml',
             'local_aicoursecreator_create_quiz',
